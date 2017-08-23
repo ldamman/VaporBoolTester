@@ -21,5 +21,19 @@ extension Droplet {
         get("description") { req in return req.description }
         
         try resource("posts", PostController.self)
-    }
+
+		get("/pretty") { req  in
+			return JSON(["someFlag": true])
+		}
+
+		get("/ugly") { req  in
+			return try Response(status: .ok, json: JSON(["someFlag": true]))
+		}
+
+		get("/uglier") { req  in
+			let response = Response(status: .ok)
+			response.json = JSON(["someFlag": true])
+			return response
+		}
+	}
 }
